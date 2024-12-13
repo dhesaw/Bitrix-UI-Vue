@@ -31,9 +31,9 @@ export interface IElementPopup{
     type: ActionType,
     target: HTMLElement,
     popupId: number,
-    data?: Record<string, unknown> | null,
+    data?: Record<string, any> | null,
     position: IPosition,
     width?: number | null,
-    style?: Record<string, unknown> | {},
+    style?: Record<string, any> | {},
     class?: Record<string, boolean>| {}
 }

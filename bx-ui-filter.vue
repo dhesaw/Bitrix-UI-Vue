@@ -1,14 +1,16 @@
 <template>
 <div class="template-filter">
     <div class="main-ui-filter-search main-ui-filter-theme-light main-ui-filter-no-search main-ui-filter-set-inside main-ui-filter-default-applied">
-		<div v-if="model" v-for="(selectedEl,key) in model" class="main-ui-filter-search-square main-ui-filter-search-square-preset main-ui-square">
-			<div class="main-ui-square-item">{{fields[key].label}}
-				<template v-if="$slots[`filter-input-${key}`]">
-					<slot v-bind="{ selectedEl, key}" :name="`filter-input-${key}`" />
-				</template> 
-				<span v-else>{{ prepareText(selectedEl, key) }}</span>
+		<div v-if="model" v-for="(selectedEl,key) in model">
+			<div v-if="fields[key]" class="main-ui-filter-search-square main-ui-filter-search-square-preset main-ui-square">
+				<div class="main-ui-square-item">{{fields[key].label}}
+					<template v-if="$slots[`filter-input-${key}`]">
+						<slot v-bind="{ selectedEl, key}" :name="`filter-input-${key}`" />
+					</template> 
+					<span v-else>{{ prepareText(selectedEl, key) }}</span>
+				</div>
+				<div class="main-ui-item-icon main-ui-square-delete" @click="deleteItem(key)"></div>
 			</div>
-			<div class="main-ui-item-icon main-ui-square-delete" @click="deleteItem(key)"></div>
 		</div>
         <div @click="openFilter($event)" data-hasPopup="true" class="main-ui-filter-search-filter">{{ model!=null && Object.keys(model).length>0  ? '+ Поиск' : 'Фильтр'}}</div>
         <div class="main-ui-item-icon-block">

@@ -2,6 +2,7 @@
     <Teleport v-if="popup" :to="popup.teleportId">
     <div
         class="popup-window"
+        :class="props.class"
         :id=" !props.outerClick ? 'bx-component-popup-vue' : ''"
         :style="{
         ...popup.style,
@@ -29,12 +30,12 @@ interface IElementPopup{
     teleportId:string,
     data?: any,
     position: IPosition,
-    style?: Record<string, unknown> | {},
+    style?: Record<string, any> | {},
     class?: Record<string, boolean>| {}
 }
 
 interface IAdditionalOptions{
-    style?: Record<string, unknown> | {},
+    style?: Record<string, any> | {},
     class?: Record<string, boolean>| {},
 }
 
@@ -43,6 +44,7 @@ const globalClick = ref<HTMLDivElement | null>(document.querySelector('#app'));
 
 const props=withDefaults(defineProps<{
     collision?: boolean,
+    class?: Record<string, boolean>| {},
     outerClick?: boolean,
 }>() , {
     outerClick: false,

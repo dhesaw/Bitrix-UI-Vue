@@ -1,7 +1,10 @@
 <template>
 <Teleport to="#app">
     <div v-if="showVar" :class="{'side-panel-overlay':disabledBackground}">
-        <div  class="popup-window popup-window-with-titlebar ui-entity-editor-content-user-scope-popup popup-window-fixed-width popup-window-fixed-height" id="formMain" 
+        <div 
+            class="popup-window popup-window-with-titlebar ui-entity-editor-content-user-scope-popup popup-window-fixed-width popup-window-fixed-height" 
+            id="formMain"
+            :class="props.class"
             :style="{
                 display: 'block', 
                 position: 'absolute',
@@ -37,8 +40,10 @@ import { IPosition, PopupLocation } from './globalInterface';
         label?:string,
         location?:PopupLocation,
         disabledBackground?:boolean,
+        class?:string,
         draggable?:boolean
     }>(),{
+        class:"",
         draggable:false,
         disabledBackground:true,
         location:PopupLocation.CENTER,
@@ -164,7 +169,7 @@ import { IPosition, PopupLocation } from './globalInterface';
 
 .popup-window-content.popup-window-content-formMain {
     max-height: 500px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .popup-window-content {

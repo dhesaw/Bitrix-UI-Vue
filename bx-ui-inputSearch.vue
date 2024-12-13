@@ -33,6 +33,7 @@ const props=withDefaults(defineProps<{
     required?:boolean,
     wrap?:boolean,
     multiple?:boolean,
+    popupClass?:Record<string, boolean>| {}
 }>(),{
     label:null,
 	wrap:true,

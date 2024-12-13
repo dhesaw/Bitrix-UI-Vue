@@ -12,8 +12,7 @@
           type="number"
           id="number_text"
           v-model="model"
-          min="0"
-          max="2"
+          :step="step"
           :disabled="disabled"
           name="NUMBER"
         />
@@ -32,6 +31,7 @@
     disabled?:boolean,
     min?:number|null,
     max?:number|null,
+    step?:number|null,
   }
   
   const model = defineModel();

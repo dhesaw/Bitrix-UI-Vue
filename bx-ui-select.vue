@@ -39,7 +39,7 @@
         </div>
     </div>
     
-    <BxTeleport ref="dropdown">
+    <BxTeleport ref="dropdown" :class="popupClass">
         <template #body="{popup}">    
 			<div :class="{'popup-multiselect-content':multiple, 'popup-select-content':!multiple}">
                 <div
@@ -89,13 +89,14 @@ export interface IUiSelect {
   required?:boolean,
   wrap?:boolean,
   multiple?:boolean,
-  options?:Array<Record<string, unknown>> | null,
+  options?:Array<Record<string, any>> | null,
+  popupClass?:Record<string, boolean>|{},
   loading?:boolean
 }
 
 const emit = defineEmits<{
-    (e: 'element:select', data:Record<string, unknown>): void,
-    (e: 'element:unselect', data:Record<string, unknown>): void,
+    (e: 'element:select', data:Record<string, any>): void,
+    (e: 'element:unselect', data:Record<string, any>): void,
     (e: 'dropdown:open'): void,
     (e: 'dropdown:closed'): void,
 }>();
@@ -127,7 +128,7 @@ function removeAll(){
 	model.value=[];
 }
 
-function onSelectectElement(element:Record<string, unknown>){
+function onSelectectElement(element:Record<string, any>){
 	if (props.multiple) {
 		
 		if (model.value && model.value.includes(element[props.optionValue])){

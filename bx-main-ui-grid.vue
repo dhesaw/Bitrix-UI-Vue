@@ -21,14 +21,20 @@
                     </span>
                 </th>
                 <th class="main-grid-cell-head main-grid-cell-static main-grid-cell-action">
-                <span class="main-grid-interface-settings-icon"></span>
+                <span class="main-grid-interface-settings-icon" @click="dialogSettingsGridShow=!dialogSettingsGridShow"></span>
                 </th>
-                <th v-for="(col, index) in collumns" class="main-grid-cell-head main-grid-cell-left main-grid-col-sortable main-grid-draggable" >
+                <th v-for="(col, index) in collumnsBySettingsHidden" class="main-grid-cell-head main-grid-cell-left main-grid-col-sortable main-grid-draggable" >
                 <div class="main-grid-cell-inner">
                     <span class="main-grid-cell-head-container">
-                        <span class="main-grid-head-title">{{ col.title }}</span>
+                        <span class="main-grid-head-title" @click="sortCollumn(col)">{{ col.title }}</span>
                         <span class="main-grid-resize-button" @mousedown.prevent="startMove($event)" />
-                        <span class="main-grid-control-sort main-grid-control-sort-hover-asc" />
+                        <span class="main-grid-control-sort" 
+                          :class="{
+                            'main-grid-control-sort-hover-asc': !sortedCollumn[col.propertyName],
+                            'main-grid-control-sort-asc': sortedCollumn[col.propertyName] && sortedCollumn[col.propertyName] === 'asc',
+                            'main-grid-control-sort-desc': sortedCollumn[col.propertyName] && sortedCollumn[col.propertyName] === 'desc',
+                          }"
+                        />
                     </span>
                 </div>
                 </th>
@@ -46,7 +52,7 @@
                         <a class="main-grid-row-action-button" :data-id="index" data-hasPopup="true" @click="rowActionPopup?.initPopup($event,PopupLocation.RIGHT,{style:{padding: '0px',}},row)"></a>
                     </span>
                 </td>
-                <td v-for="(col, index) in collumns" class="main-grid-cell main-grid-cell-left">
+                <td v-for="(col, index) in collumnsBySettingsHidden" class="main-grid-cell main-grid-cell-left">
                 <div class="main-grid-cell-inner">
                     <span class="main-grid-cell-content">
                         <template v-if="$slots[`body-${col.propertyName}`]">
@@ -110,7 +116,7 @@
                                       </span>
                                       
                                       <span class="main-ui-pagination-arrow main-ui-pagination-next" 
-                                        :class="{'disabled': options?.length<1 || currentPage === optionsByPage.length-1}" 
+                                        :class="{'disabled': (options === null || options?.length<1) || currentPage === optionsByPage.length-1}" 
                                         @click=" currentPage === optionsByPage.length-1 ? null : currentPage++"
                                       >
                                         Следующая
@@ -159,9 +165,32 @@
         </div>
 
     </div>
-</div>
 
-  <BxTeleport ref="paginator">
+    <BxDialog v-model="dialogSettingsGridShow" :label="'Настройка спика ' + (tableName.length>0 ? '«'+tableName+'»' :'')" :draggable="true" width="700" class="bx-dialog-grid">
+      <template #body>
+        <div class="main-grid-settings-window-list">
+          <div v-for="col in collumns" class="main-grid-settings-window-list-item" @click="selectCollumnSettingsAct(col)">
+            <input type="checkbox" :checked="!_hiddenCollumns.includes(col)" class="main-grid-settings-window-list-item-checkbox">
+            <label class="main-grid-settings-window-list-item-label">{{ col.title }}</label>
+          </div>
+        </div>
+      </template>
+      <template #footer>        
+        <div class="action-dialog-grid">
+          <div class="left-pos-act-dialog" />
+          <div class="middle-pos-act-dialog">
+            <bxButton @click="acceptSettingsChanges" type="success" label="Применить" />
+            <bxButton @click="dialogSettingsGridShow=false" type="light" label="Отменить" />
+          </div>
+          <div class="right-pos-act-dialog">
+            <span class="main-grid-settings-window-select-link main-grid-settings-window-select-all" @click="_hiddenCollumns=[]">Выбрать все</span>
+            <span class="main-grid-settings-window-select-link main-grid-settings-window-unselect-all" @click="selectAllCol">Отменить все</span>
+          </div>
+        </div>
+      </template>
+    </BxDialog>
+
+    <BxTeleport ref="paginator">
     <template #body="{popup}">
       <div class="menu-popup" style="display: block;"> 
         <div v-for="(paginatorItem,index) in rowsPerPageOptions" class="menu-popup-items">
@@ -192,35 +221,42 @@
     </div>
     </template>
   </BxTeleport>
+</div>
 
 </template>
 <script setup lang="ts">
-import { ref, defineProps, watch, computed, useTemplateRef } from 'vue';
+import { ref, defineProps, watch, computed, useTemplateRef, toRaw } from 'vue';
 import { ActionType, IElementPopup, PopupLocation } from './globalInterface.ts';
+import bxDialog from './bx-dialog.vue';
 import BxTeleport from './bx-teleport.vue';
 import BxLoader from './bx-loader.vue';
+import BxDialog from './bx-dialog.vue';
+import BxButton from './bx-button.vue';
 interface Collumn {
   title: string;
   propertyName: string;
 }
 
 interface IAction{
-    handlerFn: (data: Record<string, unknown>) => void,
+    handlerFn: (data: Record<string, any>) => void,
     label: string | null,
-    disabled?: (data: Record<string, unknown>) => boolean,
+    disabled?: (data: Record<string, any>) => boolean,
     style?: string | null,
 }
 
 const props=withDefaults(defineProps<{
   collumns: Collumn[],
-  options?: Array<Record<string, unknown>> | null,
+  options?: Array<Record<string, any>> | null,
   action?: IAction[] | null,
   tableName?: string,
   rowsPerPageOptions?: number[],
   defaultPageIndex?: number,
   selectedable?: boolean,
-  loading?: boolean
+  loading?: boolean,
+  customSort?: Record<string, ((a: Record<string, any>, b: Record<string, any>, type: string) => number)>
 }>(),{
+    // @ts-ignore
+    customSort: {},
     options: null,
     loading: false,
     selectedable: false,
@@ -244,14 +280,14 @@ const rowActionPopup=useTemplateRef('rowAction');
 const checkboxSelected = ref<number[]>([]);
 
 const optionsByPage = computed(() => {
-  let result: Array<Record<string, unknown>>[] = [];
+  let result: Array<Record<string, any>>[] = [];
 
-  if (props.options) {
-    for (let index = 0; index < props.options.length; index++) {
+  if (optionsBySort.value) {
+    for (let index = 0; index < optionsBySort.value.length; index++) {
       if (index % props.rowsPerPageOptions[selectedPerPageIndex.value] === 0) {
         result.push([]);
       }
-      result[result.length - 1].push(props.options[index]);
+      result[result.length - 1].push(optionsBySort.value[index]);
     }
   } else {
     result.push([]);
@@ -315,9 +351,76 @@ watch(()=> selectedPerPageIndex.value, () => {
   checkboxSelected.value=[];
 });
 
-</script>
-<style scoped>
+/* SORTINGS TABLE */
 
+const optionsBySort = computed(() => {
+  if (Object.keys(sortedCollumn.value).length === 0 || !props.options) return props.options;
+  let [field, sort] = Object.entries(sortedCollumn.value)[0];
+  
+  if (props.customSort && props.customSort.hasOwnProperty(field)) {
+    return props.options.sort((a: Record<string, any>, b: Record<string, any>) => {
+      return props.customSort[field](a, b, sort);
+    });
+  }
+
+  return props.options.sort((a: Record<string, any>, b: Record<string, any>) => {
+    let aValue = a[field];
+    let bValue = b[field];
+    if (typeof aValue === 'number' && typeof bValue === 'number') {
+        return sort === "asc" ? aValue - bValue : bValue - aValue;
+    } else {
+        if (aValue < bValue) return sort === "asc" ? -1 : 1;
+        if (aValue > bValue) return sort === "asc" ? 1 : -1;
+    }
+    return 0;
+  });
+});
+
+const sortedCollumn = ref<Record<string, string>>({});
+function sortCollumn(col: Collumn) {
+  Object.keys(sortedCollumn.value).forEach(key => {
+    if (key !== col.propertyName) delete sortedCollumn.value[key];
+  });
+  sortedCollumn.value[col.propertyName] = sortedCollumn.value[col.propertyName] === "asc" ? "desc" : "asc";
+  changePageIndex(0);
+}
+
+/* SETTINGS DIALOGS */
+const dialogSettingsGridShow=ref<Boolean>(false);
+const _hiddenCollumns=ref<Collumn[]>([]);
+const hiddenCollumns=ref<Collumn[]>([]);
+const collumnsBySettingsHidden = computed(() => {
+  return props.collumns.filter((item) => !hiddenCollumns.value.some(HidItem=>JSON.stringify(HidItem)===JSON.stringify(item)));
+});
+
+function selectCollumnSettingsAct(column: Collumn){
+  if (_hiddenCollumns.value.includes(column)) {
+    _hiddenCollumns.value.splice(_hiddenCollumns.value.indexOf(column), 1);
+  } else {
+    _hiddenCollumns.value.push(column);
+  }
+}
+
+function acceptSettingsChanges(){
+  hiddenCollumns.value=JSON.parse(JSON.stringify(_hiddenCollumns.value)) as Collumn[];
+  dialogSettingsGridShow.value=false;
+  // _hiddenCollumns.value=[];
+}
+
+function selectAllCol(){
+ props.collumns.forEach(column => selectCollumnSettingsAct(column));
+}
+
+</script>
+<style>
+
+.bx-dialog-grid .popup-window-content.popup-window-content-formMain{
+  background-color: transparent !important;
+  padding: 0px;
+}
+
+</style>
+<style scoped>
 .main-ui-pagination {
 	font-size: 11px;
 	text-transform: uppercase;
@@ -2458,7 +2561,7 @@ label.main-grid-checkbox {
 .main-grid-settings-window-list-item-label {
   display: block;
   box-sizing: border-box;
-  padding: 6px 35px 6px 28px;
+  padding: 6px 0px 6px 28px;
   word-break: break-word;
   min-height: 33px;
   width: auto;
@@ -2779,6 +2882,18 @@ label.main-grid-checkbox {
 .main-grid-empty-text {
   color: #c6c8cc;
   font: 32px var(--ui-font-family-primary, var(--ui-font-family-helvetica));
+}
+
+.action-dialog-grid{
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap:10px;
+  justify-content: space-between;
+}
+
+.action-dialog-grid > * {
+  min-width: 200px;
 }
 
 /* END OF NO INFO BLOCK */
