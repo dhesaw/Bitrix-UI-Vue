@@ -466,7 +466,7 @@ emit('action:decline');
 }
 
 .main-ui-control-field .main-ui-delete,
-.main-ui-select .main-ui-delete,
+.main-ui-select-custom .main-ui-delete,
 .main-ui-control-field-group .main-ui-delete {
 	top: calc(50% + 2px);
 	right: -25px;
@@ -682,12 +682,12 @@ emit('action:decline');
 	transition: background 0.2s linear;
 }
 
-.main-ui-filter-field-inline-row .main-ui-select {
+.main-ui-filter-field-inline-row .main-ui-select-custom {
 	margin: 0 10px 17px 0;
 	width: 135px;
 }
 
-.main-ui-filter-field-inline-row .main-ui-select .main-ui-control {
+.main-ui-filter-field-inline-row .main-ui-select-custom .main-ui-control-custom{
 	padding: 0 30px 0 10px;
 }
 
@@ -696,7 +696,7 @@ emit('action:decline');
 	display: inherit;
 }
 
-.main-ui-filter-field-inline-row .main-ui-select-inner { height: auto; }
+.main-ui-filter-field-inline-row .main-ui-select-custom-inner { height: auto; }
 
 .main-ui-filter-field-line {
 	display: -webkit-box;
@@ -716,7 +716,7 @@ emit('action:decline');
 
 .main-ui-filter-field-inline-row .main-ui-control-field { max-width: 168px; }
 
-.main-ui-filter-field-inline-inner .main-ui-select-inner-label {
+.main-ui-filter-field-inline-inner .main-ui-select-custom-inner-label {
 	overflow: hidden;
 	max-width: 125px;
 	-o-text-overflow: ellipsis;
@@ -921,7 +921,7 @@ select::-ms-expand {
 	        transform: translate3d(0px, 0px, 0px);
 }
 
-.main-ui-control-field-group .main-ui-control-value-delete { top: 1px; }
+.main-ui-control-field-group .main-ui-control-custom-value-delete { top: 1px; }
 
 .main-ui-control-field .main-ui-filter-icon-grab,
 .main-ui-control-field-group .main-ui-filter-icon-grab { opacity: 0; }
@@ -932,9 +932,9 @@ select::-ms-expand {
 .main-ui-control-field:hover .main-ui-filter-icon-grab:hover,
 .main-ui-control-field-group:hover .main-ui-filter-icon-grab:hover { opacity: 1; }
 
-.main-ui-control-field-group .main-ui-select-name { max-width: 150px; }
+.main-ui-control-field-group .main-ui-select-custom-name { max-width: 150px; }
 
-.main-ui-control-field-group .main-ui-date { min-width: 100px; }
+.main-ui-control-field-group .main-ui-date-custom { min-width: 100px; }
 
 .main-ui-item-icon.main-ui-search {
 	position: absolute;
@@ -950,7 +950,7 @@ select::-ms-expand {
 
 .main-ui-item-icon.main-ui-search:hover { opacity: 1; }
 
-.main-ui-select .main-ui-search {
+.main-ui-select-custom .main-ui-search {
 	top: 50%;
 	left: 0;
 	width: 30px;
@@ -988,23 +988,23 @@ select::-ms-expand {
 	    transform: translate(0, -50%);
 }
 
-.main-ui-control-entity + .main-ui-control-value-delete {
+.main-ui-control-entity + .main-ui-control-custom-value-delete {
 	bottom: 16px;
 	height: auto;
 }
 
-.main-ui-control-entity + .main-ui-control-value-delete .main-ui-control-value-delete-item {
+.main-ui-control-entity + .main-ui-control-custom-value-delete .main-ui-control-custom-value-delete-item {
 	top: 50%;
 	-webkit-transform: translate3d(0, -50%, 0);
 	        transform: translate3d(0, -50%, 0);
 }
 
-.main-ui-filter-field-inline-inner .main-ui-select-name { line-height: 38px; }
+.main-ui-filter-field-inline-inner .main-ui-select-custom-name { line-height: 38px; }
 
-.main-ui-control-string + .main-ui-control-value-delete { top: 21px; }
+.main-ui-control-string + .main-ui-control-custom-value-delete { top: 21px; }
 
-.main-ui-control-string + .main-ui-control-value-delete .main-ui-control-value-delete-item,
-.main-ui-date-input + .main-ui-control-value-delete .main-ui-control-value-delete-item { top: 9px; }
+.main-ui-control-string + .main-ui-control-custom-value-delete .main-ui-control-custom-value-delete-item,
+.main-ui-date-custom-input + .main-ui-control-custom-value-delete .main-ui-control-custom-value-delete-item { top: 9px; }
 
 .main-ui-item-pin .main-ui-filter-sidebar-item-text { max-width: 154px; }
 
@@ -1037,7 +1037,7 @@ select::-ms-expand {
 
 .main-ui-control-custom-date .main-ui-control-field-group .main-ui-control-field.main-ui-control-custom-date .main-ui-multi-select { position: static !important; }
 
-.main-ui-control-custom-date .main-ui-control-value-delete {
+.main-ui-control-custom-date .main-ui-control-custom-value-delete {
 	position: fixed !important;
 	top: 1px !important;
 	right: 4px !important;
@@ -1079,7 +1079,7 @@ select::-ms-expand {
 	padding-bottom: 0 !important;
 }
 
-.main-ui-select-inner-item[data-item="{\"SEPARATOR\":true}"] {
+.main-ui-select-custom-inner-item[data-item="{\"SEPARATOR\":true}"] {
 	margin-top: 4px !important;
 	margin-bottom: 4px !important;
 	min-height: 0 !important;
@@ -1089,7 +1089,7 @@ select::-ms-expand {
 	pointer-events: none !important;
 }
 
-.main-ui-select-inner-item[data-item="{\"SEPARATOR\":true}"] * { display: none; }
+.main-ui-select-custom-inner-item[data-item="{\"SEPARATOR\":true}"] * { display: none; }
 
 .main-ui-filter-date-with-years-switcher { -ms-flex-wrap: wrap !important; flex-wrap: wrap !important; }
 
@@ -1113,7 +1113,7 @@ select::-ms-expand {
 
 .main-ui-filter-range-group *:last-child { margin-right: 0 !important; }
 
-.main-ui-select[data-value*="\"VALUE\":\"RANGE\"}"] { max-width: 111px; }
+.main-ui-select-custom[data-value*="\"VALUE\":\"RANGE\"}"] { max-width: 111px; }
 
 .main-ui-filter-error-message {
 	background-color: rgb(255, 87, 82);
@@ -1384,7 +1384,7 @@ select::-ms-expand {
 
 /* endregion */
 
-.main-ui-select-inner {
+.main-ui-select-custom-inner {
 	max-height: 177px;
 	overflow: auto;
 }
@@ -1447,18 +1447,18 @@ select::-ms-expand {
 	display: block;
 }
 
-.main-ui-control.main-ui-select .main-ui-square-search,
-.main-ui-control.main-ui-select .main-ui-square-search-item {
+.main-ui-control-custom.main-ui-select-custom .main-ui-square-search,
+.main-ui-control-custom.main-ui-select-custom .main-ui-square-search-item {
 	opacity: 0;
 	width: 1px;
 	height: 1px;
 }
 
-.main-ui-control.main-ui-multi-select .main-ui-square-search {
+.main-ui-control-custom.main-ui-multi-select .main-ui-square-search {
 	position: relative;
 }
 
-.main-ui-control.main-ui-multi-select .main-ui-square-search::before {
+.main-ui-control-custom.main-ui-multi-select .main-ui-square-search::before {
 	display: inline-block;
 	content: '';
 	position: absolute;
@@ -1468,7 +1468,7 @@ select::-ms-expand {
 	bottom: 0;
 }
 
-.main-ui-control.main-ui-multi-select {
+.main-ui-control-custom.main-ui-multi-select {
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
@@ -1788,17 +1788,17 @@ select::-ms-expand {
 	        animation-fill-mode: both;
 }
 
-.main-ui-control.main-ui-number {
+.main-ui-control-custom.main-ui-number {
 	min-width: auto;
 	padding: 0;
 	border: 0;
 }
 
-.main-ui-control.main-ui-number::before{
+.main-ui-control-custom.main-ui-number::before{
 	display: none;
 }
 
-.main-ui-control-input.main-ui-number-input {
+.main-ui-control-input .main-ui-number-input {
 	width: 100%;
 	-webkit-box-sizing: border-box;
 	        box-sizing: border-box;
@@ -1839,7 +1839,7 @@ input[type=number].main-ui-number-input::-webkit-outer-spin-button {
 	appearance: none;
 }
 
-.main-ui-control-entity.main-ui-control {
+.main-ui-control-entity.main-ui-control-custom{
 	padding: 3px 32px 0 3px;
 	height: auto;
 }
@@ -1860,7 +1860,7 @@ input[type=number].main-ui-number-input::-webkit-outer-spin-button {
 }
 
 
-.main-ui-control-entity .main-ui-control.main-ui-control-string[type="text"] {
+.main-ui-control-entity .main-ui-control-custom.main-ui-control-string[type="text"] {
 	width: 100%;
 	border: none;
 	letter-spacing: normal;
@@ -1869,7 +1869,7 @@ input[type=number].main-ui-number-input::-webkit-outer-spin-button {
 	transition: none;
 }
 
-.main-ui-control-entity .main-ui-control.main-ui-control-string[type="text"]:nth-child(2) {
+.main-ui-control-entity .main-ui-control-custom.main-ui-control-string[type="text"]:nth-child(2) {
 	padding-left: 4px;
 }
 
@@ -1909,7 +1909,7 @@ input[type=number].main-ui-number-input::-webkit-outer-spin-button {
 	display: none;
 }
 
-.main-ui-control-field-group .main-ui-control.main-ui-select {
+.main-ui-control-field-group .main-ui-control-custom.main-ui-select-custom {
 	padding-bottom: 2px;
 	white-space: nowrap;
 }
@@ -1945,7 +1945,7 @@ input[type=number].main-ui-number-input::-webkit-outer-spin-button {
 	transform: translateZ(0);
 }
 
-.main-ui-filter-field-list-item .main-ui-select-inner-label {
+.main-ui-filter-field-list-item .main-ui-select-custom-inner-label {
 	position: relative;
 	line-height: 19px;
 	width: auto;
@@ -1958,7 +1958,7 @@ input[type=number].main-ui-number-input::-webkit-outer-spin-button {
 	padding-bottom: 0;
 }
 
-.main-ui-filter-field-list-item .main-ui-select-inner-label::before {
+.main-ui-filter-field-list-item .main-ui-select-custom-inner-label::before {
 	position: absolute;
 	top: 2px;
 	left: -26px;
@@ -2038,11 +2038,11 @@ input[type=number].main-ui-number-input::-webkit-outer-spin-button {
 	height: 31px;
 }
 
-.main-ui-number .main-ui-control-value-delete {
+.main-ui-number .main-ui-control-custom-value-delete {
 	right: 24px;
 }
 
-.main-ui-control-entity + .main-ui-control-value-delete {
+.main-ui-control-entity + .main-ui-control-custom-value-delete {
 	top: 21px;
 }
 
@@ -2249,7 +2249,7 @@ input[type=number].main-ui-number-input::-webkit-outer-spin-button {
 
 
 /*.main-ui-filter-preset-field .main-ui-control,*/
-/*.main-ui-filter-preset-field .main-ui-date-input{*/
+/*.main-ui-filter-preset-field .main-ui-date-custom-input{*/
 /*border-color: rgba(15, 167, 215, .5);*/
 /*}*/
 
@@ -2389,7 +2389,7 @@ input[type=number].main-ui-number-input::-webkit-outer-spin-button {
 .main-ui-filter-with-additional-filters .main-ui-filter-field-container-list > .main-ui-control-field[data-type="DEST_SELECTOR"] .main-ui-control-entity,
 .main-ui-filter-with-additional-filters .main-ui-filter-field-container-list > .main-ui-control-field[data-type="MULTI_SELECT"] .main-ui-multi-select,
 .main-ui-filter-with-additional-filters .main-ui-filter-field-container-list > .main-ui-control-field-group[data-type="DATE"],
-.main-ui-filter-with-additional-filters .main-ui-filter-field-container-list > .main-ui-control-field[data-type="SELECT"] .main-ui-select {
+.main-ui-filter-with-additional-filters .main-ui-filter-field-container-list > .main-ui-control-field[data-type="SELECT"] .main-ui-select-custom {
 	width: calc(100% - 42px);
 }
 
@@ -2413,20 +2413,20 @@ input[type=number].main-ui-number-input::-webkit-outer-spin-button {
 	right: -42px;
 }
 
-.main-ui-filter-with-additional-filters .main-ui-filter-field-container-list > .main-ui-control-field[data-type="SELECT"] .main-ui-select .main-ui-control-value-delete-item {
+.main-ui-filter-with-additional-filters .main-ui-filter-field-container-list > .main-ui-control-field[data-type="SELECT"] .main-ui-select-custom .main-ui-control-custom-value-delete-item {
 	right: -12px;
 }
 
-.main-ui-filter-with-additional-filters .main-ui-filter-field-container-list > .main-ui-control-field[data-type="MULTI_SELECT"] .main-ui-multi-select .main-ui-control-value-delete-item {
+.main-ui-filter-with-additional-filters .main-ui-filter-field-container-list > .main-ui-control-field[data-type="MULTI_SELECT"] .main-ui-multi-select .main-ui-control-custom-value-delete-item {
 	right: 2px;
 }
 
-.main-ui-filter-with-additional-filters .main-ui-filter-field-container-list > .main-ui-control-field[data-type="STRING"] .main-ui-control-value-delete {
+.main-ui-filter-with-additional-filters .main-ui-filter-field-container-list > .main-ui-control-field[data-type="STRING"] .main-ui-control-custom-value-delete {
 	right: 43px;
 	background-color: transparent;
 }
 
-.main-ui-filter-with-additional-filters .main-ui-filter-field-container-list > .main-ui-filter-additional-filters-hide[data-type="STRING"] .main-ui-control-value-delete {
+.main-ui-filter-with-additional-filters .main-ui-filter-field-container-list > .main-ui-filter-additional-filters-hide[data-type="STRING"] .main-ui-control-custom-value-delete {
 	right: 1px;
 }
 
@@ -2458,7 +2458,7 @@ input[type=number].main-ui-number-input::-webkit-outer-spin-button {
 }
 
 .main-ui-filter-field-with-additional-filter[data-type="STRING"] > input.main-ui-control-string,
-.main-ui-filter-field-with-additional-filter[data-type="SELECT"] > .main-ui-select,
+.main-ui-filter-field-with-additional-filter[data-type="SELECT"] > .main-ui-select-custom,
 .main-ui-filter-field-with-additional-filter[data-type="MULTI_SELECT"] > .main-ui-multi-select,
 .main-ui-filter-field-with-additional-filter[data-type="DATE"] > .main-ui-control-field,
 .main-ui-filter-field-with-additional-filter[data-type="DATE"] > .main-ui-filter-range-group,
@@ -2478,7 +2478,7 @@ input[type=number].main-ui-number-input::-webkit-outer-spin-button {
 .main-ui-filter-field-container-list > .main-ui-filter-additional-filters-hide.main-ui-control-field[data-type="DEST_SELECTOR"] .main-ui-control-entity,
 .main-ui-filter-field-container-list > .main-ui-filter-additional-filters-hide.main-ui-control-field[data-type="MULTI_SELECT"] .main-ui-multi-select,
 .main-ui-filter-field-container-list > .main-ui-filter-additional-filters-hide.main-ui-control-field-group[data-type="DATE"],
-.main-ui-filter-field-container-list > .main-ui-filter-additional-filters-hide.main-ui-control-field[data-type="SELECT"] .main-ui-select {
+.main-ui-filter-field-container-list > .main-ui-filter-additional-filters-hide.main-ui-control-field[data-type="SELECT"] .main-ui-select-custom {
 	width: 100%;
 }
 

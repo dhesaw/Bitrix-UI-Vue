@@ -6,7 +6,7 @@
               {{ label }} <span v-if="required" style="color: rgb(255, 0, 0)">*</span>
           </label>
       </div>
-      <div class="main-ui-control">
+      <div class="main-ui-control-custom">
         <input
           class="main-ui-control-input main-ui-number-input"
           type="number"
@@ -16,7 +16,7 @@
           :disabled="disabled"
           name="NUMBER"
         />
-        <div class="main-ui-control-value-delete" v-if="model && !disabled" @click="clear"><span class="main-ui-control-value-delete-item"></span></div>
+        <div class="main-ui-control-custom-value-delete" v-if="model && !disabled" @click="clear"><span class="main-ui-control-custom-value-delete-item"></span></div>
       </div>
     </div>
   </template>
@@ -57,7 +57,7 @@
   </script>
   
   <style scoped>
-  .main-ui-control {
+  .main-ui-control-custom{
 	position: relative;
 	height: 38px;
 	width: 100%;
@@ -72,13 +72,13 @@
 	outline: none;
 }
 
-.main-ui-control-input.main-ui-number-input {
+.main-ui-control-input .main-ui-number-input {
     width: 100%;
     box-sizing: border-box;
     line-height: 37px;
 }
 
-.main-ui-control .main-ui-control-input {
+.main-ui-control-custom .main-ui-control-input {
 	position: relative;
 	height: 38px;
     padding: 0 10px;
@@ -94,7 +94,7 @@
 	outline: none;
 }
 
-.main-ui-control-value-delete {
+.main-ui-control-custom-value-delete {
 	height: 34px;
 	width: 30px;
 	position: absolute;
@@ -103,7 +103,7 @@
 	background: transparent;
 }
 
-.main-ui-control-value-delete-item {
+.main-ui-control-custom-value-delete-item {
 	position: absolute;
 	top: 10px;
 	right: 6px;
@@ -116,22 +116,22 @@
 	opacity: 0;
 }
 
-.main-ui-control:hover .main-ui-control-value-delete-item,
-.main-ui-control-field:hover .main-ui-control-value-delete-item {
+.main-ui-control:hover .main-ui-control-custom-value-delete-item,
+.main-ui-control-field:hover .main-ui-control-custom-value-delete-item {
 	opacity: 1;
 }
 
-.main-ui-control .main-ui-control-input{
+.main-ui-control-custom .main-ui-control-input{
     color: #535c69;
 }
 
-.main-ui-control .main-ui-control-input:disabled{
+.main-ui-control-custom .main-ui-control-input:disabled{
   background-color: var(--ui-field-color-disabled);
   color: #808081;
   cursor: not-allowed;
 }
 
-.main-ui-control-value-delete-item:after {
+.main-ui-control-custom-value-delete-item:after {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -147,7 +147,7 @@
 	opacity: 0;
 }
 
-.main-ui-control-value-delete:hover .main-ui-control-value-delete-item:after {
+.main-ui-control-custom-value-delete:hover .main-ui-control-custom-value-delete-item:after {
 	opacity: 1;
 }
 

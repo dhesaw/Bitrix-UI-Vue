@@ -152,7 +152,8 @@ const props=withDefaults(defineProps<{
     word-break: break-word;
     font: 15px / 17px var(--ui-font-family-primary, var(--ui-font-family-helvetica));
 }
-.ui-entity-editor-included-area-container, .ui-entity-editor-content-block {
+/* .ui-entity-editor-content-block */
+.ui-entity-editor-included-area-container{
     position: relative;
     margin: 0 0 15px;
     transition: 220ms opacity linear;

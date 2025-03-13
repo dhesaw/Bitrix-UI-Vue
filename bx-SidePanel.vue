@@ -2,7 +2,7 @@
 <Teleport to="#app">
         <div class="side-panel side-panel-overlay" :class="{'side-panel-overlay-open':model===true}">
             <Transition>
-                <div v-if="showVar===true" class="side-panel side-panel-containerVue" :style="{'width':props.width}">
+                <div v-if="showVar===true" class="side-panel side-panel-containerVue" :style="{'width':props.width+'px'}">
                     <div class="side-panel-content-container">
                             <slot />
                     </div>
@@ -10,10 +10,10 @@
                     v-if="showVar===true" 
                     class="side-panel-labelsVue" 
                     :style="{
-                        right: props.width,
+                        right: props.width+'px',
                     }">
 
-                    <div @click="closeSidePanel" class="side-panel-label" :style="{'background-color': props.color,'max-width': '215',}">
+                    <div @click="closeSidePanel" class="side-panel-label" :style="{'background-color': props.color,'max-width': '215px',}">
                         <div class="side-panel-label-icon-box" title="Закрыть">
                             <div class="side-panel-label-icon side-panel-label-icon-close"></div>
                         </div>

@@ -91,14 +91,18 @@ function outerClick(event:MouseEvent){
 function initPopup(event: MouseEvent, type: PopupLocation, options:IAdditionalOptions = {}, data:any = null){
     let clickArea:HTMLElement = event.currentTarget as HTMLElement;
     let boundingClientRect: DOMRect = clickArea?.getBoundingClientRect();
-    let appContainer = event.target instanceof HTMLElement ? event.target.closest('#app, .side-panel-content-container, .popup-window-content-formMain') : null;
+    let appContainer = event.target instanceof HTMLElement ? event.target.closest('.template-bitrix24, .side-panel-content-container, .popup-window-content-formMain') : null;
+    if (appContainer==null) appContainer = document.querySelector('#app');
+    
     if (boundingClientRect==null || clickArea==null || appContainer==null) return;
     let popupId = Math.floor(Math.random() * 100000000) + 1;
-
+    console.dir(appContainer);
     if(appContainer?.classList.contains('side-panel-content-container')){
         if(appContainer.id==null || appContainer.id=='') appContainer.id='panelContainer-'+Math.floor(Math.random() * 100000000) + 1;
     } else if(appContainer?.classList.contains('popup-window-content-formMain')){
         if(appContainer.id==null || appContainer.id=='') appContainer.id='formMain-'+Math.floor(Math.random() * 100000000) + 1;
+    } else if(appContainer?.classList.contains('template-bitrix24')){
+        if(appContainer.id==null || appContainer.id=='') appContainer.id='template-bitrix24';
     }
     
     if ((clickArea.dataset.popupid && parseInt(clickArea.dataset.popupid) > 0) || popup.value!=null) {
@@ -114,7 +118,7 @@ function initPopup(event: MouseEvent, type: PopupLocation, options:IAdditionalOp
     console.dir(appContainer?.id);
     let result:IElementPopup={ 
         position: { x: 0, y: 0 },
-        teleportId: appContainer?.id ? '#'+appContainer.id : '#app',
+        teleportId:appContainer?.id ? '#'+appContainer.id : '#app',
         type: type,
         target: clickArea,
         popupId: popupId,
@@ -125,9 +129,9 @@ function initPopup(event: MouseEvent, type: PopupLocation, options:IAdditionalOp
     const scrollPositionY = appContainer.scrollTop!==null  ? appContainer.scrollTop : window.pageYOffset;
     const scrollPositionX = appContainer.scrollLeft!==null ? appContainer.scrollLeft : window.pageXOffset;
     const appContainerRect = appContainer?.getBoundingClientRect();
+    console.dir([{el:clickArea,rect:boundingClientRect},{el:appContainer,rect:appContainerRect}]);
     switch (type) {
         case PopupLocation.BOTTOM:
-            console.dir([{el:clickArea,rect:boundingClientRect},{el:appContainer,rect:appContainerRect}]);
             result.position.x = (boundingClientRect.x - appContainerRect.x + (appContainer as HTMLElement).offsetLeft) + scrollPositionX;
             result.position.y = (boundingClientRect.top - appContainerRect.top + (appContainer as HTMLElement).offsetTop) + boundingClientRect.height + scrollPositionY;
         break;
@@ -143,7 +147,7 @@ function initPopup(event: MouseEvent, type: PopupLocation, options:IAdditionalOp
             result.position.y = (boundingClientRect.top - appContainerRect.top + (appContainer as HTMLElement).offsetTop) + scrollPositionY;
         break;
     }
-
+    console.log(result);
     popup.value=result;
     globalClick.value?.addEventListener('mouseup', outerClick, { capture: true, once: true });
 }

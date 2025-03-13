@@ -1,8 +1,8 @@
 <template>
-<div class="main-ui-select">
+<div class="main-ui-select-custom">
     <div class="main-ui-control-field">
         <span v-if="label!=null" class="main-ui-control-field-label">{{ label }} <span v-if="required" style="color: rgb(255, 0, 0)"> *</span></span>
-        <div class="main-ui-control main-ui-select" 
+        <div class="main-ui-control-custom main-ui-select-custom" 
 			@click="disabled ? null : dropdownPopup?.initPopup(
 					$event,
 					PopupLocation.BOTTOM,
@@ -19,7 +19,7 @@
 				'main-ui-disable': disabled, 
 				'main-ui-focus': dropdownPopup?.isActive
 			}">
-            <span class="main-ui-select-name" :style="{'flex-wrap': wrap ? 'wrap' : 'nowrap'}">
+            <span class="main-ui-select-custom-name" :style="{'flex-wrap': wrap ? 'wrap' : 'nowrap'}">
                 <template v-if="$slots[`selected`]">
                     <slot :name="`selected`" v-bind="{ model }"></slot>
                 </template>
@@ -30,7 +30,7 @@
 						<span class="main-ui-square-item">{{ options?.find((item)=>item[optionValue]==model[index])?.[optionLabel] }}</span>
 						<span class="main-ui-item-icon main-ui-square-delete" v-if="!disabled" @click.stop="removeItem(item)"></span>
 					</span>
-					<span v-if="multiple && Array.isArray(model) && model.length>0 && !disabled" @click="removeAll" class="main-ui-control-value-delete"><div class="main-ui-control-value-delete-item" ></div></span>
+					<span v-if="multiple && Array.isArray(model) && model.length>0 && !disabled" @click="removeAll" class="main-ui-control-custom-value-delete"><div class="main-ui-control-custom-value-delete-item" ></div></span>
                 </template>
             </span>
             <span class="main-ui-square-search">
@@ -45,15 +45,15 @@
                 <div
 				v-if="options!=null && options?.length>0"
 				v-for="(item, index) in options" 
-				class="main-ui-select-inner-item" 
+				class="main-ui-select-custom-inner-item" 
 				:class="{'main-ui-checked': multiple ? (Array.isArray(model) && model.includes(item[optionValue])) : item[optionValue]==model}"
 				>
-                    <div class="main-ui-select-inner-item-element" @click="onSelectectElement(item)">
+                    <div class="main-ui-select-custom-inner-item-element" @click="onSelectectElement(item)">
                         <template v-if="$slots[`dropdown`]">
                             <slot v-bind="{ item, index, model}" :name="`dropdown`" ></slot>
                         </template>
                         <template v-else>
-                            <div :class="{'main-ui-select-inner-label':multiple}">
+                            <div :class="{'main-ui-select-custom-inner-label':multiple}">
 								{{ item[optionLabel] }}
 							</div>
                         </template>
@@ -63,7 +63,7 @@
 					<BxLoader style="background-color: transparent;" />
 				</div>
 				<div v-else class="ui-selector-tab-stub">
-					<div class="ui-selector-tab-default-stub main-ui-select-inner-item-element">
+					<div class="ui-selector-tab-default-stub main-ui-select-custom-inner-item-element">
 						<div class="ui-selector-tab-default-stub-icon"></div>
 						<div class="ui-selector-tab-default-stub-titles">
 							<div class="ui-selector-tab-default-stub-title">Данные не найдены</div>
@@ -214,7 +214,7 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
     font: 12px / 14px var(--ui-font-family-primary, var(--ui-font-family-helvetica));
 }
 
-.main-ui-control {
+.main-ui-control-custom{
 	position: relative;
 	padding: 0 10px;
 	height: 38px;
@@ -228,7 +228,7 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	outline: none;
 }
 
-.main-ui-control .main-ui-control-input {
+.main-ui-control-custom .main-ui-control-input {
 	position: relative;
 	padding: 0 10px 0 30px;
 	height: 38px;
@@ -242,7 +242,7 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	outline: none;
 }
 
-.main-ui-control-value-delete {
+.main-ui-control-custom-value-delete {
 	height: 36px;
 	width: 30px;
 	position: absolute;
@@ -250,7 +250,7 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	right: 1px; 
 }
 
-.main-ui-control-value-delete-item {
+.main-ui-control-custom-value-delete-item {
 	position: absolute;
 	top: 10px;
 	cursor: pointer;
@@ -263,12 +263,12 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	opacity: 0;
 }
 
-.main-ui-control:hover .main-ui-control-value-delete-item,
-.main-ui-control-field:hover .main-ui-control-value-delete-item {
+.main-ui-control:hover .main-ui-control-custom-value-delete-item,
+.main-ui-control-field:hover .main-ui-control-custom-value-delete-item {
 	opacity: 1;
 }
 
-.main-ui-control-value-delete-item:after {
+.main-ui-control-custom-value-delete-item:after {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -283,7 +283,7 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	opacity: 0;
 }
 
-.main-ui-control-value-delete:hover .main-ui-control-value-delete-item:after {
+.main-ui-control-custom-value-delete:hover .main-ui-control-custom-value-delete-item:after {
 	opacity: 1;
 }
 
@@ -292,27 +292,27 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	display: none;
 }
 
-.main-ui-select-inner-item {
+.main-ui-select-custom-inner-item {
 	margin-bottom: 0;
 }
 
-.main-ui-select-inner-item.main-ui-select-inner-item-selected {
+.main-ui-select-custom-inner-item.main-ui-select-custom-inner-item-selected {
 	background: #f3f6f8;
 }
 
-.popup-select-content .main-ui-select-inner-item,
-.popup-multiselect-content .main-ui-select-inner-item {
+.popup-select-content .main-ui-select-custom-inner-item,
+.popup-multiselect-content .main-ui-select-custom-inner-item {
 	padding-left: 10px;
 	padding-right: 10px;
 	position: relative;
 }
 
-.main-ui-select-inner-item.main-ui-select-inner-item-selected {
+.main-ui-select-custom-inner-item.main-ui-select-custom-inner-item-selected {
 	background: #f3f6f8;
 }
 
-.main-ui-control.main-ui-select .main-ui-square-search,
-.main-ui-control.main-ui-select .main-ui-square-search-item {
+.main-ui-control-custom.main-ui-select-custom .main-ui-square-search,
+.main-ui-control-custom.main-ui-select-custom .main-ui-square-search-item {
 	position: absolute !important;
 	opacity: 0 !important;
 	width: 1px !important;
@@ -321,11 +321,11 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	margin: 0 !important;
 }
 
- .main-ui-control.main-ui-multi-select .main-ui-square-search {
+ .main-ui-control-custom.main-ui-multi-select .main-ui-square-search {
 	position: relative;
 }
 
-.main-ui-control.main-ui-multi-select .main-ui-square-search::before {
+.main-ui-control-custom.main-ui-multi-select .main-ui-square-search::before {
 	display: inline-block;
 	content: '';
 	position: absolute;
@@ -335,7 +335,7 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	bottom: 0;
 }
 
-.main-ui-control.main-ui-multi-select {
+.main-ui-control-custom.main-ui-multi-select {
 	user-select: none;
 }
 
@@ -343,7 +343,7 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	box-sizing: border-box;
 }
 
-.main-ui-select-inner-item.main-ui-select-inner-item-legend {
+.main-ui-select-custom-inner-item.main-ui-select-custom-inner-item-legend {
 	margin-top: 6px;
 	padding-left: 10px;
 	font-weight: var(--ui-font-weight-bold);
@@ -351,17 +351,17 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	border-bottom: none;
 }
 
-.main-ui-select-inner-item.main-ui-select-inner-item-legend .main-ui-select-inner-item-element {
+.main-ui-select-custom-inner-item.main-ui-select-custom-inner-item-legend .main-ui-select-custom-inner-item-element {
 	height: 28px;
 	line-height: 28px;
 	margin-top: 2px;
 }
 
-.main-ui-select-inner-item.main-ui-select-inner-item-legend:hover {
+.main-ui-select-custom-inner-item.main-ui-select-custom-inner-item-legend:hover {
 	background: inherit;
 }
 
-.main-ui-select-inner-item.main-ui-select-inner-item-legend .main-ui-select-inner-label::before {
+.main-ui-select-custom-inner-item.main-ui-select-custom-inner-item-legend .main-ui-select-custom-inner-label::before {
 	display: none;
 }
 
@@ -404,8 +404,8 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	box-shadow: inset 0 0 0 2px #3BB4E3;
 }
 
-.main-ui-control.main-ui-select,
-.main-ui-control.main-ui-multi-select {
+.main-ui-control-custom.main-ui-select-custom,
+.main-ui-control-custom.main-ui-multi-select {
 	padding: 3px 50px 3px 3px;
 	height: auto;
 	min-height: 38px;
@@ -417,16 +417,16 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	appearance: none;
 }
 
-.main-ui-control.main-ui-multi-select {
+.main-ui-control-custom.main-ui-multi-select {
 	display: table;
 	padding-bottom: 0;
 }
 
-.main-ui-control.main-ui-select {
+.main-ui-control-custom.main-ui-select-custom {
 	min-height: 38px;
 }
 
-.main-ui-select-name {
+.main-ui-select-custom-name {
 	display: flex;
 	user-select: none;
     flex-direction: row;
@@ -441,7 +441,7 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 }
 
 
-.main-ui-select-inner {
+.main-ui-select-custom-inner {
 	padding: 6px;
 	margin: 1px 0 0 0;
 	box-shadow: 0 6px 21px 0 rgba(0,0,0,0.15);
@@ -449,7 +449,7 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	overflow: auto;
 }
 
-.main-ui-select-inner-item {
+.main-ui-select-custom-inner-item {
 	padding: 0 6px 0 3px;
 	min-height: 33px;
 	font: 14px/33px var(--ui-font-family-primary, var(--ui-font-family-helvetica));
@@ -458,20 +458,20 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	cursor: pointer;
 }
 
-.main-ui-select-inner-item:last-child {
+.main-ui-select-custom-inner-item:last-child {
 	margin: 0;
 }
 
-.main-ui-select-inner-item:hover {
+.main-ui-select-custom-inner-item:hover {
 	background: #f3f6f8;
 }
 
-.main-ui-select-inner-item.color1 {
+.main-ui-select-custom-inner-item.color1 {
 	background: #d5f8fc;
 	cursor: default;
 }
 
-.main-ui-select-inner-item.color2 {
+.main-ui-select-custom-inner-item.color2 {
 	background: #f0f7ca;
 	cursor: default;
 }
@@ -489,17 +489,17 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	padding: 6px 0;
 }
 
-.popup-select-content .main-ui-select-inner-item {
+.popup-select-content .main-ui-select-custom-inner-item {
 	border-bottom: 3px solid #fff;
 }
 
-.popup-multiselect-content .main-ui-select-inner-item {
+.popup-multiselect-content .main-ui-select-custom-inner-item {
 	margin: 0;
 	padding: 0;
 }
 
-.popup-multiselect-content .main-ui-select-inner-item:last-child,
-.popup-select-content .main-ui-select-inner-item:last-child {
+.popup-multiselect-content .main-ui-select-custom-inner-item:last-child,
+.popup-select-content .main-ui-select-custom-inner-item:last-child {
 	margin: 0;
 	border-bottom: 0;
 }
@@ -558,8 +558,8 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	letter-spacing: 10px;
 }
 
-.main-ui-select .main-ui-control-value-delete,
-.main-ui-multi-select .main-ui-control-value-delete {
+.main-ui-select-custom .main-ui-control-custom-value-delete,
+.main-ui-multi-select .main-ui-control-custom-value-delete {
 	right: 25px;
 	top: 50%;
 	height: -webkit-calc(100% - 2px);
@@ -567,23 +567,23 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	transform: translate(0,-50%);
 }
 
-.main-ui-multi-select .main-ui-control-value-delete-item,
-.main-ui-select .main-ui-control-value-delete-item {
+.main-ui-multi-select .main-ui-control-custom-value-delete-item,
+.main-ui-select-custom .main-ui-control-custom-value-delete-item {
 	top: 50%;
 	transform: translate(0,-50%);
 }
 
-.main-ui-control.main-ui-disable{
+.main-ui-control-custom.main-ui-disable{
   background-color: var(--ui-field-color-disabled);
   cursor: not-allowed;
 }
 
-.main-ui-control.main-ui-disable .main-ui-select-name{
+.main-ui-control-custom.main-ui-disable .main-ui-select-custom-name{
   color: #808081;
   cursor: not-allowed;
 }
 
-.main-ui-select-inner-label {
+.main-ui-select-custom-inner-label {
 	display: inline-block;
 	position: relative;
 	line-height: 21px;
@@ -592,7 +592,7 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	padding-bottom: 6px;
 }
 
-.main-ui-select-inner-label:before {
+.main-ui-select-custom-inner-label:before {
 	content: '';
 	display: inline-block;
 	position: absolute;
@@ -606,7 +606,7 @@ watch(() => dropdownPopup.value?.isActive, (newValue,oldValue) => {
 	vertical-align: middle;
 }
 
-.main-ui-checked .main-ui-select-inner-label:before {
+.main-ui-checked .main-ui-select-custom-inner-label:before {
 	background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2217%22%20height%3D%2215%22%20viewBox%3D%220%200%2017%2015%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Crect%20width%3D%2213%22%20height%3D%2213%22%20x%3D%22.5%22%20y%3D%221.125%22%20fill%3D%22%23FFF%22%20stroke%3D%22%23259EC6%22%20rx%3D%222%22/%3E%3Cpath%20fill%3D%22%23259EC6%22%20d%3D%22M7.53%208.487l-3.775-3.6-1.25%201.368%204.94%205.01.075-.074.286.335%208.694-10.4L15.094%200%207.53%208.487z%22/%3E%3C/g%3E%3C/svg%3E');
 	background-repeat: no-repeat;
 	background-position: 2px 0;

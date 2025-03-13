@@ -2310,28 +2310,28 @@ label.main-grid-checkbox {
 }
 
 .main-grid-action-panel .main-grid-panel-date,
-.main-grid-action-panel .main-grid-panel-date .main-ui-date-input {
+.main-grid-action-panel .main-grid-panel-date .main-ui-date-custom-input {
   height: 40px;
   line-height: 40px;
 }
 
-.main-grid-action-panel .main-grid-panel-date .main-ui-date-input {
+.main-grid-action-panel .main-grid-panel-date .main-ui-date-custom-input {
   border: 1px solid #c6cdd3;
 }
 
-.main-grid-action-panel .main-grid-panel-date .main-ui-date-button {
+.main-grid-action-panel .main-grid-panel-date .main-ui-date-custom-button {
   height: 32px;
   background-position: 6px -231px;
 }
 
-.main-grid-action-panel .main-grid-panel-date .main-ui-control-value-delete {
+.main-grid-action-panel .main-grid-panel-date .main-ui-control-custom-value-delete {
   height: 32px;
 }
 
 .main-grid-action-panel
   .main-grid-panel-date
-  .main-ui-control-value-delete
-  .main-ui-control-value-delete-item {
+  .main-ui-control-custom-value-delete
+  .main-ui-control-custom-value-delete-item {
   top: 8px;
 }
 
