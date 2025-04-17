@@ -15,6 +15,7 @@
           :step="step"
           :disabled="disabled"
           name="NUMBER"
+          :placeholder="placeholder"
         />
         <div class="main-ui-control-custom-value-delete" v-if="model && !disabled" @click="clear"><span class="main-ui-control-custom-value-delete-item"></span></div>
       </div>
