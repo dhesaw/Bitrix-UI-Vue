@@ -356,7 +356,7 @@
   }
   
   .main-ui-filter-field-container input:focus, .main-ui-focus {
-      border: 1px solid rgba(81, 203, 238, 1);
+      border-color: var(--ui-field-color-primary);
   }
   .main-ui-control-custom .main-ui-control-input {
       /* position: relative; */

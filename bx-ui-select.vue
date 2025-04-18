@@ -642,7 +642,7 @@
 	}
 	
 	.main-ui-focus {
-		border: 1px solid rgba(81, 203, 238, 1);
+		border-color: var(--ui-field-color-primary);
 	}
 	
 	.main-ui-placeholder{
