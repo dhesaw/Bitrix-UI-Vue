@@ -8,7 +8,11 @@
         :class="{'main-ui-disable': disabled, 'main-ui-focus': calendarPopup?.isActive}"
       >
         <span class="main-ui-date-custom-button"></span>
-        <span class="main-ui-control-input main-ui-date-custom-input">{{outerText}}</span>
+  
+        <span class="main-ui-control-input main-ui-date-custom-input">
+          <span v-if="model==null || (Array.isArray(model) && model.length==0)">{{ placeholder }}</span>
+          <span v-else>{{ outerText }}</span>
+        </span>
         
         <div @click.prevent="clear" v-if="model && !disabled" class="main-ui-control-custom-value-delete">
           <span class="main-ui-control-custom-value-delete-item"></span>
@@ -95,6 +99,7 @@
       label?:string|null,
       format?: string,
       range?:boolean,
+      placeholder?:string,
       disabled?:boolean,
       required?:boolean,
       monthPicker?:boolean
@@ -276,6 +281,10 @@
   <style scoped>
   .popup-window{
     position: fixed;
+  }
+  
+  .bx-calendar-placeholder{
+    padding-left: 5px;
   }
   
   .main-ui-control-field-label {
