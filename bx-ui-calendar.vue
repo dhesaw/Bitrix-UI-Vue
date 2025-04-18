@@ -10,7 +10,7 @@
         <span class="main-ui-date-custom-button"></span>
   
         <span class="main-ui-control-input main-ui-date-custom-input">
-          <span v-if="model==null || (Array.isArray(model) && model.length==0)">{{ placeholder }}</span>
+          <span v-if="model==null || (Array.isArray(model) && model.length==0)" class="main-ui-placeholder">{{ placeholder }}</span>
           <span v-else>{{ outerText }}</span>
         </span>
         
@@ -986,6 +986,10 @@
   }
   * html .bx-calendar-form-text {
     width: 46px;
+  }
+  
+  .main-ui-placeholder{
+    color: #757575;
   }
   </style>
   
