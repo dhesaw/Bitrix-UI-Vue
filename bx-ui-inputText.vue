@@ -1,7 +1,7 @@
 <template>
   <div class="ui-entity-editor-content-block ui-entity-editor-field-text">
     <div class="ui-entity-editor-block-before-action"></div>
-    <div class="ui-entity-editor-block-title ui-entity-widget-content-block-title-edit">
+    <div v-if="label!=null" class="ui-entity-editor-block-title ui-entity-widget-content-block-title-edit">
         <label class="ui-entity-editor-block-title-text">
             {{ label }} <span v-if="required" style="color: rgb(255, 0, 0)">*</span>
         </label>
@@ -123,7 +123,7 @@ function clear() {
 	opacity: 0;
 }
 
-.main-ui-control:hover .main-ui-control-custom-value-delete-item,
+.main-ui-control-custom:hover .main-ui-control-custom-value-delete-item,
 .main-ui-control-field:hover .main-ui-control-custom-value-delete-item {
 	opacity: 1;
 }
