@@ -292,7 +292,17 @@ const optionsByPage = computed(() => {
       sortedOptions = [...props.options].sort((a, b) => {
         let aValue = a[field];
         let bValue = b[field];
-        if (typeof aValue === 'number' && typeof bValue === 'number') {
+        
+        // Check if the values are date strings
+        const datePattern = /^\d{2}\.\d{2}\.\d{4}$/; // Example pattern for dd.mm.yyyy format
+        const isADate = datePattern.test(aValue);
+        const isBDate = datePattern.test(bValue);
+
+        if (isADate && isBDate) {
+          const aDate = new Date(aValue.split('.').reverse().join('-'));
+          const bDate = new Date(bValue.split('.').reverse().join('-'));
+          return sort === "asc" ? aDate - bDate : bDate - aDate;
+        } else if (typeof aValue === 'number' && typeof bValue === 'number') {
           return sort === "asc" ? aValue - bValue : bValue - aValue;
         } else {
           if (aValue < bValue) return sort === "asc" ? -1 : 1;
