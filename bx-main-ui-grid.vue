@@ -280,20 +280,37 @@ const rowActionPopup=useTemplateRef('rowAction');
 const checkboxSelected = ref<number[]>([]);
 
 const optionsByPage = computed(() => {
-  let result: Array<Record<string, any>>[] = [];
+  if (!props.options) return [[]];
 
-  if (optionsBySort.value) {
-    for (let index = 0; index < optionsBySort.value.length; index++) {
-      if (index % props.rowsPerPageOptions[selectedPerPageIndex.value] === 0) {
-        result.push([]);
-      }
-      result[result.length - 1].push(optionsBySort.value[index]);
+  let sortedOptions = props.options;
+  if (Object.keys(sortedCollumn.value).length > 0) {
+    const [field, sort] = Object.entries(sortedCollumn.value)[0];
+    
+    if (props.customSort && props.customSort.hasOwnProperty(field)) {
+      sortedOptions = [...props.options].sort((a, b) => props.customSort[field](a, b, sort));
+    } else {
+      sortedOptions = [...props.options].sort((a, b) => {
+        let aValue = a[field];
+        let bValue = b[field];
+        if (typeof aValue === 'number' && typeof bValue === 'number') {
+          return sort === "asc" ? aValue - bValue : bValue - aValue;
+        } else {
+          if (aValue < bValue) return sort === "asc" ? -1 : 1;
+          if (aValue > bValue) return sort === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
     }
-  } else {
-    result.push([]);
   }
 
-  return result;
+  const pageSize = props.rowsPerPageOptions[selectedPerPageIndex.value];
+  const pages = Math.ceil(sortedOptions.length / pageSize);
+
+  return Array.from({ length: pages }, (_, index) => {
+    const start = index * pageSize;
+    const end = start + pageSize;
+    return toRaw(sortedOptions.slice(start, end));
+  });
 });
 
 function resizeHeader(event: MouseEvent, target: HTMLElement) {
@@ -352,29 +369,6 @@ watch(()=> selectedPerPageIndex.value, () => {
 });
 
 /* SORTINGS TABLE */
-
-const optionsBySort = computed(() => {
-  if (Object.keys(sortedCollumn.value).length === 0 || !props.options) return props.options;
-  let [field, sort] = Object.entries(sortedCollumn.value)[0];
-  
-  if (props.customSort && props.customSort.hasOwnProperty(field)) {
-    return props.options.sort((a: Record<string, any>, b: Record<string, any>) => {
-      return props.customSort[field](a, b, sort);
-    });
-  }
-
-  return props.options.sort((a: Record<string, any>, b: Record<string, any>) => {
-    let aValue = a[field];
-    let bValue = b[field];
-    if (typeof aValue === 'number' && typeof bValue === 'number') {
-        return sort === "asc" ? aValue - bValue : bValue - aValue;
-    } else {
-        if (aValue < bValue) return sort === "asc" ? -1 : 1;
-        if (aValue > bValue) return sort === "asc" ? 1 : -1;
-    }
-    return 0;
-  });
-});
 
 const sortedCollumn = ref<Record<string, string>>({});
 function sortCollumn(col: Collumn) {
